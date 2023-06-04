@@ -20,6 +20,5 @@ class Scheduler:
     def update(self):
         self.n_steps += 1
         lr = self.get_learning_rate()
-        print(lr)
         for param_group in self._optimizer.param_groups:
             param_group['lr'] = lr

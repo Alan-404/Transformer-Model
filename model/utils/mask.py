@@ -13,7 +13,6 @@ def generate_look_ahead_mask(tensor: torch.Tensor) -> torch.Tensor:
 
     look_ahead_mask = __generate_look_ahead_mask(tensor.size(1)).to(tensor.device)
 
-
     look_ahead_mask = torch.maximum(look_ahead_mask, padding_mask)
 
     return look_ahead_mask

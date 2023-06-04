@@ -16,7 +16,7 @@ class MultiHeadAttention(nn.Module):
         self.linear_output = nn.Linear(in_features=d_model, out_features=d_model)
 
     def scaled_dot_product_attention(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: Union[torch.Tensor, None]) -> tuple[torch.Tensor, torch.Tensor]:
-        dk = torch.tensor(k.size(-1), dtype=torch.Tensor)
+        dk = torch.tensor(k.size(-1))
 
         attention_scores = torch.matmul(q, k.transpose(-1, -2))
         attention_scores = attention_scores/(torch.sqrt(dk))
@@ -25,6 +25,7 @@ class MultiHeadAttention(nn.Module):
             attention_scores += mask * (-torch.inf)
 
         attention_weights = torch.softmax(attention_scores, dim=-1)
+
         attention_context = torch.matmul(attention_weights, v)
         
         return attention_context, attention_weights

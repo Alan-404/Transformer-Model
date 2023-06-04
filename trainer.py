@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 import torch.optim as optim
 from typing import Union, Callable
-from model.transformer import Transformer
+from .model.transformer import Transformer
 from .loss import TransformerLoss
 from .metric import BLEU
 from .scheduler import Scheduler
@@ -77,7 +77,8 @@ class TransformerTrainer:
         self.scheduler.step()
 
     def build_dataset(self, inputs: torch.Tensor, outputs: torch.Tensor, batch_size: int):
-        return DataLoader(dataset=TensorDataset(inputs, outputs), batch_size=batch_size)
+        dataset = TensorDataset(inputs, outputs)
+        return DataLoader(dataset=dataset, batch_size=batch_size)
     
     def fit(self, 
             inputs: torch.Tensor, 
@@ -95,7 +96,7 @@ class TransformerTrainer:
             val_inputs, val_outputs = validation_data
             validation = True
         elif validation_split is not None:
-            inputs, outputs, val_inputs, val_outputs = train_test_split(inputs, outputs, test_size=validation_split)
+            inputs, val_inputs,outputs, val_outputs = train_test_split(inputs, outputs, test_size=validation_split)
             validation = True
 
         if validation:
@@ -112,8 +113,8 @@ class TransformerTrainer:
             count = 0
             for index, data in enumerate(dataloader, 0):
                 encoder_inputs = data[0].to(self.device)
-                decoder_inputs = data[1][:-1].to(self.device)
-                labels = data[1][1:].to(self.device)
+                decoder_inputs = data[1][:, :-1].to(self.device)
+                labels = data[1][:, 1:].to(self.device)
 
                 self.train_step(encoder_inputs, decoder_inputs, labels)
                 count += 1
@@ -139,8 +140,8 @@ class TransformerTrainer:
         self.model.eval()
         for _, data in enumerate(dataloader):
             encoder_inputs = data[0].to(self.device)
-            decoder_inputs = data[1][:-1].to(self.device)
-            labels = data[1][1:].to(self.device)
+            decoder_inputs = data[1][:, :-1].to(self.device)
+            labels = data[1][:, 1:].to(self.device)
 
             padding_mask = generate_padding_mask(encoder_inputs)
             look_ahead_mask = generate_look_ahead_mask(decoder_inputs)
