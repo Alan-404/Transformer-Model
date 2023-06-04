@@ -60,13 +60,15 @@
 ## II. Details
 ### 1. Attention Mechanism <br/>
 <b>Code: </b> <a href="https://github.com/Alan-404/Transformer-Model/blob/master/model/utils/attention.py">Attention Code</a> <br/>
-Attention is the way that all items in a context can consider together and get attention weights for detecting their relations through multiple mechanism between query and key; And finally consider attention between this one and value.
-Hyper - parameters of this layer is:
+Attention is the way that all items in a context can consider together and get attention weights for detecting their relations through multiple mechanism between query and key; And finally consider attention between this one and value. <br/>
+<i>Hyper - parameters of this layer is:</i>
 - heads: Number of heads used for Multi - Head Attention (heads = 1 is Self Attention). <br/>
 - d_model: Number of embedding dimensions of word embedding.<br/>
 <img src="./assets/attention.png"/>
-Inputs of layer for forward propagation is:
+<img src="./assets/scaled.png"/>
+<i>Inputs of layer for forward propagation is:</i> <br>
 - q: Play role query of context. <br/>
 - k: Play role key of context.<br/>
 - v: Play role value of context.<br/>
 - mask: Hide the padding value for model.<br/>
+
