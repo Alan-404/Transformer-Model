@@ -3,7 +3,61 @@
 
 ## I. Model Architecture
 <img src="./assets/Transformer.png"/>
-
+<center>
+    <b>Hyper - parameters of model:</b><br/>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Meaning</th>
+        </tr>
+        <tr>
+            <td>encoder_token_size</td>
+            <td>Depend on tokenization</td>
+            <td>Number of tokens used for Encoder</td>
+        </tr>
+        <tr>
+            <td>decoder_token_size</td>
+            <td>Depend on tokenization</td>
+            <td>Number of tokens used for Decoder</td>
+        </tr>
+        <tr>
+            <td>n</td>
+            <td>6</td>
+            <td>Number of Encoder layers, so does Decoder layers</td>
+        </tr>
+        <tr>
+            <td>heads</td>
+            <td>8</td>
+            <td>Number of heads for Multi - Head Attention</td>
+        </tr>
+        <tr>
+            <td>d_model</td>
+            <td>512</td>
+            <td>Number of dimensions in word embedding</td>
+        </tr>
+        <tr>
+            <td>d_ff</td>
+            <td>2048</td>
+            <td>Number of hidden dimensions in Position wise Feed Forward Networks</td>
+        </tr>
+        <tr>
+            <td>dropout_rate</td>
+            <td>0.1</td>
+            <td>Probability of Dropout Layer</td>
+        </tr>
+        <tr>
+            <td>eps</td>
+            <td>0.1</td>
+            <td>Coefficient Normalization of Layer Norm</td>
+        </tr>
+        <tr>
+            <td>activation</td>
+            <td>ReLU</td>
+            <td>Activation function in Position wise Feed Forwards Networks</td>
+        </tr>
+    </table>
+</center><br>
 ## II. Details
 ### 1. Attention Mechanism <br/>
 <b>Code: </b> <a href="https://github.com/Alan-404/Transformer-Model/blob/master/model/utils/attention.py">Attention Code</a> <br/>
