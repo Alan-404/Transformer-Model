@@ -3,8 +3,8 @@
 
 ## I. Model Architecture
 <img src="./assets/Transformer.png"/>
-<b align="center">Hyper - parameters of model:</b><br/>
     <table>
+    <caption>Hyper - parameters of model</caption>
         <tr>
             <th>Name</th>
             <th>Value</th>
@@ -56,6 +56,7 @@
             <td>Activation function in Position wise Feed Forwards Networks</td>
     </tr>
 </table>
+
 ## II. Details
 ### 1. Attention Mechanism <br/>
 <b>Code: </b> <a href="https://github.com/Alan-404/Transformer-Model/blob/master/model/utils/attention.py">Attention Code</a> <br/>
