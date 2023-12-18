@@ -20,8 +20,8 @@ class PositionalEncoding(nn.Module):
         angles = self.__encode_embedding(x.size(2))
         pos_angles = torch.matmul(pos, angles)
 
-        pos_angles[0::2] = torch.sin(pos_angles[0::2])
-        pos_angles[1::2] = torch.cos(pos_angles[1::2])
+        pos_angles[:, 0::2] = torch.sin(pos_angles[:, 0::2])
+        pos_angles[:, 1::2] = torch.cos(pos_angles[:, 1::2])
 
         x += pos_angles.unsqueeze(0).to(x.device)
         return x
