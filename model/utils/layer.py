@@ -44,6 +44,7 @@ class DecoderLayer(nn.Module):
         # sublayer 1
         local_attention, _ = self.local_attention(x, x, x, look_ahead_mask)
         local_attention = self.residual_1(local_attention, x)
+        
         # sublayer 2
         global_attention, _ = self.global_attention(local_attention, encoder_output, encoder_output, padding_mask)
         global_attention = self.residual_2(global_attention, local_attention)

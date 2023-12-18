@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from typing import Union
+import math
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, heads: int, d_model: int) -> None:
@@ -9,22 +11,22 @@ class MultiHeadAttention(nn.Module):
         self.d_model = d_model
         self.head_samples = d_model // heads
 
+        self.sqrt_sample = math.sqrt(self.head_samples)
+
         self.linear_q = nn.Linear(in_features=d_model, out_features=d_model)
         self.linear_k = nn.Linear(in_features=d_model, out_features=d_model)
         self.linear_v = nn.Linear(in_features=d_model, out_features=d_model)
 
         self.linear_output = nn.Linear(in_features=d_model, out_features=d_model)
 
-    def scaled_dot_product_attention(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: Union[torch.Tensor, None]) -> tuple[torch.Tensor, torch.Tensor]:
-        dk = torch.tensor(k.size(-1))
-
+    def scaled_dot_product_attention(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: Union[torch.Tensor, None]) -> [torch.Tensor, torch.Tensor]:
         attention_scores = torch.matmul(q, k.transpose(-1, -2))
-        attention_scores = attention_scores/(torch.sqrt(dk))
+        attention_scores = attention_scores/self.sqrt_sample
 
         if mask is not None:
-            attention_scores += mask * (-torch.inf)
+            attention_scores += mask * (float('-inf'))
 
-        attention_weights = torch.softmax(attention_scores, dim=-1)
+        attention_weights = F.softmax(attention_scores, dim=-1)
 
         attention_context = torch.matmul(attention_weights, v)
         
@@ -38,7 +40,7 @@ class MultiHeadAttention(nn.Module):
         
         return x
     
-    def forward(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: Union[torch.Tensor, None]) -> tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor, mask: Union[torch.Tensor, None]) -> [torch.Tensor, torch.Tensor]:
         self_attention = (self.heads is None or self.heads == 1)
 
         qw = self.linear_q(q)

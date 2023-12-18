@@ -2,7 +2,7 @@ import torch
 import numpy as np
 
 class BLEU:
-    def __init__(self, n_grams: int = 4, uniform_weights: tuple | list = [0.25, 0.25, 0.25, 0.25]):
+    def __init__(self, n_grams: int = 4, uniform_weights: list = [0.25, 0.25, 0.25, 0.25]):
         if n_grams != len(uniform_weights):
             print("Confliced weights of grams")
             return

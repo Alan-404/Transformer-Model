@@ -87,7 +87,7 @@ class TransformerTrainer:
             batch_size: int, 
             mini_batch: int, 
             validation_split: float = None,
-            validation_data: tuple[torch.Tensor, torch.Tensor] = None, 
+            validation_data: [torch.Tensor, torch.Tensor] = None, 
             validation_batch: int = None,
             **kwargs) -> None:
         
@@ -132,7 +132,7 @@ class TransformerTrainer:
             
             self.epoch += 1
 
-    def evaluate(self, inputs: torch.Tensor, outputs: torch.Tensor, batch_size: int = 1) -> tuple[torch.Tensor, torch.Tensor]:
+    def evaluate(self, inputs: torch.Tensor, outputs: torch.Tensor, batch_size: int = 1) -> [torch.Tensor, torch.Tensor]:
         dataloader = self.build_dataset(inputs, outputs, batch_size=batch_size)
         num_batches = len(dataloader)
         loss = 0.0

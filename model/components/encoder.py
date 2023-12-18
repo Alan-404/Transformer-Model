@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from typing import Callable, Union
+from typing import Callable, Optional
 from ..utils.layer import EncoderLayer
 from ..utils.position import PositionalEncoding
 
@@ -11,9 +11,9 @@ class Encoder(nn.Module):
         self.postional_encoding = PositionalEncoding()
         self.layers = nn.ModuleList([EncoderLayer(d_model=d_model, heads=heads, d_ff=d_ff, dropout_rate=dropout_rate, eps=eps, activation=activation) for _ in range(n)])
     
-    def forward(self, x: torch.Tensor, mask: Union[torch.Tensor, None]) -> torch.Tensor:
+    def forward(self, x: torch.Tensor, mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         x = self.embedding(x)
-        x = self.postional_encoding(x)
+        x += self.postional_encoding(x.size(1))
         for layer in self.layers:
             x = layer(x, mask)
         return x

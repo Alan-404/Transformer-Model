@@ -37,10 +37,12 @@ class Transformer(nn.Module):
             activation=activation
         )
 
+    def generate_look_ahead_mask(self, padding_mask: torch.Tensor):
+        pass
+
     def forward(self, encoder_input: torch.Tensor, decoder_input: torch.Tensor, padding_mask: Union[torch.Tensor, None], look_ahead_mask: Union[torch.Tensor, None]) -> torch.Tensor:
         encoder_output = self.encoder(encoder_input, padding_mask)
 
         decoder_output = self.decoder(decoder_input, encoder_output, look_ahead_mask, padding_mask)
 
         return decoder_output
-
